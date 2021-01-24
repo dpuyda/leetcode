@@ -7,19 +7,18 @@ public:
     if (matrix.empty()) {
       return 0;
     }
-    const auto rows = matrix.size();
     const auto cols = matrix[0].size() + 1u;
     std::vector<int> sizes(cols);
     auto size = 0;
-    for (auto row = 0u; row < rows; ++row) {
+    for (const auto &row : matrix) {
       auto prev = sizes[0];
-      for (auto col = 1u; col < cols; ++col) {
-        const auto t = sizes[col];
-        if (matrix[row][col - 1] == '1') {
-          sizes[col] = 1 + std::min(sizes[col - 1], std::min(prev, sizes[col]));
-          size = std::max(size, sizes[col]);
+      for (auto i = 1u; i < cols; ++i) {
+        const auto t = sizes[i];
+        if (row[i - 1] == '1') {
+          sizes[i] = 1 + std::min(prev, std::min(sizes[i - 1], sizes[i]));
+          size = std::max(size, sizes[i]);
         } else {
-          sizes[col] = 0;
+          sizes[i] = 0;
         }
         prev = t;
       }
