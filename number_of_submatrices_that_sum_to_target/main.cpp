@@ -28,12 +28,13 @@ public:
   }
 
 private:
-  int numSubsequenceSumTarget(const std::vector<int> &row, const int target) {
+  int numSubsequenceSumTarget(const std::vector<int> &sums, const int target) {
+    // Maps a sum to the number of subarrays
     static std::unordered_map<int, int> map;
     map.clear();
     map.emplace(0, 1);
     auto sum = 0, result = 0;
-    for (const auto value : row) {
+    for (const auto value : sums) {
       sum += value;
       const auto diff_it = map.find(sum - target);
       if (diff_it != map.end()) {
